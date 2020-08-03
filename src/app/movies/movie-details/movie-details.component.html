@@ -1,0 +1,31 @@
+<mat-progress-bar *ngIf="loading$ | async" color="accent" mode="indeterminate"></mat-progress-bar>
+
+<div class="movie-details-box" *ngIf="movie">
+    <mat-card>
+        <mat-card-header>
+            <div mat-card-avatar class="card-img"></div>
+            <mat-card-title>{{ movie.title }}</mat-card-title>
+            <mat-card-subtitle>{{ movie.release_date | date }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="/assets/star-wars-logo.jpg">
+        <mat-card-content>
+            <p>{{ movie.opening_crawl }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>SEE CHARACTERS</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-selection-list dense [multiple]="false">
+                        <mat-list-option *ngFor="let character of characters"
+                            [routerLink]="'/characters/' + character.id">
+                            <mat-icon mat-list-icon>emoji_people</mat-icon>
+                            <div mat-line>{{ character.name }}</div>
+                        </mat-list-option>
+                    </mat-selection-list>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,37 @@
+<mat-progress-bar *ngIf="loading$ | async" color="accent" mode="indeterminate"></mat-progress-bar>
+
+<!-- <pre> {{ character | json }} </pre> -->
+<div class="character-details-box" *ngIf="character">
+    <mat-card>
+        <mat-card-header>
+            <div mat-card-avatar class="card-img"></div>
+            <mat-card-title>{{ character.name }}</mat-card-title>
+            <mat-card-subtitle>{{ character.birth_year }}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="/assets/star-wars-logo.jpg">
+        <mat-card-content>
+            <mat-list dense>
+                <div mat-subheader>PERSONAL DATA</div>
+                <mat-list-item> <strong>Eye color: &nbsp;</strong> {{ character.eye_color.toLocaleUpperCase() }}</mat-list-item>
+                <mat-list-item> <strong>Hair color: &nbsp;</strong> {{ character.hair_color.toLocaleUpperCase() }}</mat-list-item>
+                <mat-list-item> <strong>Height: &nbsp;</strong> {{ character.height }}</mat-list-item>
+                <mat-list-item> <strong>Gender: &nbsp;</strong> {{ character.gender.toLocaleUpperCase() }}</mat-list-item>
+            </mat-list>
+        </mat-card-content>
+        <mat-card-actions>
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>SEE MOVIES</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-selection-list dense [multiple]="false">
+                        <mat-list-option *ngFor="let movie of movies" [routerLink]="'/movies/' + movie.id">
+                            <mat-icon mat-list-icon>theaters</mat-icon>
+                            <div mat-line>{{ movie.title }} <i>({{ movie.release_date | date }})</i> </div>
+                        </mat-list-option>
+                    </mat-selection-list>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-card-actions>
+    </mat-card>
+</div>

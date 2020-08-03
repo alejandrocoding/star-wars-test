@@ -1,0 +1,10 @@
+.movie-details-box {
+  width: 50%;
+  min-width: 300px;
+  max-width: 500px;
+  margin: 50px auto;
+  .card-img {
+    background-image: url('https://icon-library.com/images/darth-vader-vector-icon/darth-vader-vector-icon-0.jpg');
+    background-size: cover;
+  }
+}

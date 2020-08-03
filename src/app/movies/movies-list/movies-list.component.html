@@ -1,0 +1,10 @@
+<mat-progress-bar *ngIf="loading$ | async" color="accent" mode="indeterminate"></mat-progress-bar>
+
+<mat-selection-list [multiple]="false" *ngIf="movies.length">
+    <div mat-subheader>ALL MOVIES</div>
+    <mat-list-option *ngFor="let movie of movies" [routerLink]="movie.id">
+        <mat-icon mat-list-icon>theaters</mat-icon>
+        <div mat-line>{{ movie.title }}</div>
+        <div mat-line> {{ movie.release_date | date }} </div>
+    </mat-list-option>
+</mat-selection-list>

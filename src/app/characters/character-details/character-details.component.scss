@@ -1,0 +1,10 @@
+.character-details-box {
+  width: 50%;
+  min-width: 300px;
+  max-width: 500px;
+  margin: 50px auto;
+  .card-img {
+    background-image: url('https://www.clipartmax.com/png/middle/31-315381_star-wars-clipart-helmet-stormtrooper-helmet-vector-png.png');
+    background-size: cover;
+  }
+}
