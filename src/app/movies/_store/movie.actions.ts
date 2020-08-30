@@ -18,3 +18,13 @@ export const loadMovieAndCharactersSuccess = createAction(
   '[Movie] Load Movie & Characters Success',
   props<{ payload: { movie: Movie, characters: Character[] } }>()
 );
+
+// Search Movies By Name
+export const searchMovies = createAction(
+  '[Movies] Search Movies',
+  props<{ payload: { search: string } }>()
+);
+export const searchMoviesLoadSuccess = createAction(
+  '[Movies] Search Movies Success',
+  props<{ payload: { movies: Movie[] } }>()
+);

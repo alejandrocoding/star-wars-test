@@ -8,6 +8,7 @@ import { MoviesService, CharactersService } from '@services';
 
 import { loadFirstsMovies, loadFirstsMoviesLoadSuccess } from './movie.actions';
 import { loadMovieAndCharacters, loadMovieAndCharactersSuccess } from './movie.actions';
+import { searchMovies, searchMoviesLoadSuccess } from './movie.actions';
 
 @Injectable()
 export class MoviesEffects {
@@ -48,9 +49,24 @@ export class MoviesEffects {
     );
   });
 
+  searchMovies$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(searchMovies),
+      mergeMap((action) =>
+        this.moviesService.searchMovie(action.payload.search).pipe(
+          map((movies) => ({
+            type: searchMoviesLoadSuccess.type,
+            payload: { movies },
+          })),
+          catchError(() => EMPTY)
+        )
+      )
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private moviesService: MoviesService,
     private charactersService: CharactersService
-  ) {}
+  ) { }
 }

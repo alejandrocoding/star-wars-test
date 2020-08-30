@@ -5,10 +5,27 @@ import { EMPTY, forkJoin, of } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 
 import { MoviesService, CharactersService } from '@services';
+import { loadFirstsCharacters, loadFirstsCharactersLoadSuccess } from './character.actions';
 import { loadCharacterAndMovies, loadCharacterAndMoviesSuccess } from './character.actions';
+import { searchCharacters, searchCharactersLoadSuccess } from './character.actions';
 
 @Injectable()
 export class CharactersEffects {
+  loadFirstCharacters$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(loadFirstsCharacters),
+      mergeMap(() =>
+        this.charactersService.getAllCharacters().pipe(
+          map((characters) => ({
+            type: loadFirstsCharactersLoadSuccess.type,
+            payload: { characters },
+          })),
+          catchError(() => EMPTY)
+        )
+      )
+    );
+  });
+
   loadCharacterAndMovies$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(loadCharacterAndMovies),
@@ -31,9 +48,24 @@ export class CharactersEffects {
     );
   });
 
+  searchCharacters$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(searchCharacters),
+      mergeMap((action) =>
+        this.charactersService.searchCharacter(action.payload.search).pipe(
+          map((characters) => ({
+            type: searchCharactersLoadSuccess.type,
+            payload: { characters },
+          })),
+          catchError(() => EMPTY)
+        )
+      )
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private moviesService: MoviesService,
     private charactersService: CharactersService
-  ) {}
+  ) { }
 }

@@ -11,11 +11,14 @@
   </mat-form-field>
 </form>
 
-<mat-selection-list [multiple]="false" *ngIf="movies.length">
+<mat-selection-list [multiple]="false" *ngIf="characters.length">
   <div mat-subheader>ALL MOVIES</div>
-  <mat-list-option *ngFor="let movie of movies" [routerLink]="movie.id">
+  <mat-list-option
+    *ngFor="let character of characters"
+    [routerLink]="character.id"
+  >
     <mat-icon mat-list-icon>theaters</mat-icon>
-    <div mat-line>{{ movie.title }}</div>
-    <div mat-line>{{ movie.release_date | date }}</div>
+    <div mat-line>{{ character.name }}</div>
+    <!-- <div mat-line>{{ character.birth_year | date }}</div> -->
   </mat-list-option>
 </mat-selection-list>

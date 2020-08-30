@@ -3,6 +3,7 @@ import { createReducer, on, Action } from '@ngrx/store';
 import { MovieState } from './movie.state';
 import { loadFirstsMovies, loadFirstsMoviesLoadSuccess } from './movie.actions';
 import { loadMovieAndCharacters, loadMovieAndCharactersSuccess } from './movie.actions';
+import { searchMovies, searchMoviesLoadSuccess } from './movie.actions';
 
 export const initialState: MovieState = {
   loading: false,
@@ -33,7 +34,16 @@ const reducer = createReducer(
       movie: payload.movie,
       characters: payload.characters,
     },
-  }))
+  })),
+  on(searchMovies, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(searchMoviesLoadSuccess, (state, { payload }) => ({
+    ...state,
+    loading: false,
+    movies: payload.movies,
+  })),
 );
 
 export function moviesReducer(state: MovieState, action: Action): MovieState {

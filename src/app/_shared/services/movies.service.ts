@@ -11,7 +11,7 @@ import { extractID, extractIDs } from '@helpers';
 export class MoviesService {
   private readonly URL = 'https://swapi.dev/api/films/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAllMovies(): Observable<Movie[]> {
     return this.http.get<{ results: MovieApi[] }>(this.URL).pipe(
@@ -29,6 +29,13 @@ export class MoviesService {
   getMovies(ids: string[]): Observable<Movie[]> {
     const moviesRequests = ids.map((id) => this.getMovie(id));
     return forkJoin(moviesRequests);
+  }
+
+  searchMovie(name: string): Observable<Movie[]> {
+    return this.http.get<{ results: MovieApi[] }>(`${this.URL}?search=${name}`).pipe(
+      map((response) => response.results),
+      map((movies) => this.transformMoviesApiToMovies(movies))
+    );
   }
 
   private transformMoviesApiToMovies(movies: MovieApi[]): Movie[] {
